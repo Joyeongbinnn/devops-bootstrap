@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend
+  namespace: argocd
+  annotations:
+    #argocd-image-updater.argoproj.io/image-list: >
+    #  fe=528920766011.dkr.ecr.us-east-1.amazonaws.com/agora/frontend:latest
+    #argocd-image-updater.argoproj.io/fe.update-strategy: latest
+    #argocd-image-updater.argoproj.io/write-back-method: argocd
+spec:
+  project: soboro
+  source:
+    repoURL: https://lab.ssafy.com/s13-final/S13P31B101.git
+    targetRevision: master
+    path: infra/k8s/40-app/frontend
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: soboro
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-env
+data:
+  # 예시(README에서 실제 수정하도록 지시)
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://db.internal:5432/app"
+  SPRING_DATASOURCE_USERNAME: "appuser"
+  SPRING_DATASOURCE_PASSWORD: "NOT_USED_HERE" # 실제는 Secret로

@@ -1,0 +1,21 @@
+grafana:
+  adminPassword: "ChangeMe-Admin!" # (6) 예시 → 바꾸기
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns01"
+    hosts: ["grafana.soboro.com"] # (5) 예시 → 선택/수정
+    tls:
+      - secretName: grafana-tls
+        hosts: ["grafana.soboro.com"]
+  grafana.ini:
+    server:
+      domain: "grafana.soboro.com"
+      root_url: "https://grafana.soboro.com/"
+      serve_from_sub_path: false
+prometheus:
+  ingress:
+    enabled: false
+alertmanager:
+  enabled: false # 요청에 따라 알람기능 제외

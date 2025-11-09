@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-runtime-config
+  namespace: soboro
+data:
+  # This file will be mounted into the frontend container at /app/public/runtime-config.js
+  # Change the NEXT_PUBLIC_API_URL value per-environment (dev/stage/prod) before applying.
+  runtime-config.js: |
+    window.__RUNTIME_CONFIG__ = {
+      NEXT_PUBLIC_API_URL: "example"
+    };

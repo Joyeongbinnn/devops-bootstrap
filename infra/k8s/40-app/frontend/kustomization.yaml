@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: soboro
+resources:
+  - deployment.yaml
+  - service.yaml
+  - configmap.yaml
+images:
+  - name: frontend
+    newName: 111122223333.dkr.ecr.ap-northeast-2.amazonaws.com/soboro/frontend # (3) 예시
+    newTag: latest
+configMapGenerator:
+  - name: frontend-env
+    behavior: merge
+    literals:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=https://api.soboro.com # 예시

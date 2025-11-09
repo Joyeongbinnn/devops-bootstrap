@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: soboro
+  namespace: argocd
+spec:
+  description: "Soboro applications"
+  sourceRepos:
+    - "*"
+  destinations:
+    - namespace: soboro
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
