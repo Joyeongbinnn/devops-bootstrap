@@ -1,23 +1,31 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: backend-ing
+  name: soboro-api
   namespace: soboro
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns01"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "INGRESSBACKEND"
+    nginx.ingress.kubernetes.io/session-cookie-path: "/"
+    nginx.ingress.kubernetes.io/session-cookie-samesite: "Lax"
 spec:
   ingressClassName: nginx
   tls:
-    - hosts: ["api.<DOMAIN>"]
-      secretName: api-tls
+    - hosts:
+        - www.kduck.store
+      secretName: soboro-tls
   rules:
-    - host: api.<DOMAIN>
+    - host: www.kduck.store
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
-                name: backend-svc
+                name: backend
                 port:
                   number: 8080

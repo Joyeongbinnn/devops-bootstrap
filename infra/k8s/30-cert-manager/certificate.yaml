@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kduck-store-tls
+  namespace: soboro
+spec:
+  secretName: kduck-store-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  dnsNames:
+    - kduck.store
+    - www.kduck.store
+  duration: 2160h # 90일
+  renewBefore: 360h # 만료 15일 전 갱신 시도
